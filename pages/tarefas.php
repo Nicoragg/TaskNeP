@@ -1,8 +1,8 @@
 <?php
-require_once "./helpers/funcoes.php";
+require_once "./helpers/functions.php";
 if(isset($_POST["nome"])){
     $chave = ["nome", "descricao", "prazo", "responsavel"];
-    [$nome, $descricao, $prazo, $atribuido] = array_map(fn($key) => validaInput($_POST[$key]), $chave);
+    [$nome, $descricao, $prazo, $atribuido] = array_map(fn($key) => validateInput($_POST[$key]), $chave);
 }
 
 ?>
