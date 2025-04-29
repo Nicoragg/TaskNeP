@@ -21,6 +21,22 @@ setcookie('teste', "testando", [
     'samesite' => 'Strict'
 ]);
 
+if(isset($_GET['logout'])){
+    $_SESSION = [];
+    session_destroy();
+
+    foreach($_COOKIE as $nome => $valor){
+        setcookie($nome, "", [
+            'expires' => time() - 60 * 60,
+            'path' => '/', 
+            'secure' => true, 
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]);
+
+    }
+}
+
 ?>
 
 <h1>Dashboard</h1>
