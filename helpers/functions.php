@@ -1,6 +1,5 @@
 <?php
-function validateInput($data): string {
-    return htmlspecialchars(trim($data));
+function validateInput($data): string
+{
+  return htmlspecialchars(trim($data));
 }
-
-?>

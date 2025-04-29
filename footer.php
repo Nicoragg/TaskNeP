@@ -1,3 +1,3 @@
 <footer>
-    <p>&copy;<?= date("Y")?> - todos os direitos reservados</p>
+  <p>&copy;<?= date("Y") ?> - todos os direitos reservados</p>
 </footer>
