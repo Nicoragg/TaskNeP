@@ -3,7 +3,7 @@
 </div>
 <div class="user-container">
   <div class="user-card">
-    <h2></h2>
+    <h2>Jhon Doe</h2>
     <p>john@example.com</p>
     <section>
       <a href="?logout=1"><button>Log Out</button></a>
