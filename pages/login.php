@@ -1,5 +1,10 @@
 <section>
   <h1>Login</h1>
+
+  <?php if (isset($erro)): ?>
+    <p style="color:red"><?= $erro ?></p>
+  <?php endif; ?>
+
   <form method="post" action="?page=home">
     <label for="user">Usuário:</label>
     <input type="text" name="user" id="user" required><br><br>

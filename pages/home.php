@@ -1,41 +1,37 @@
 <?php
+session_start();
 
-session_start([
-  'name' => "minha sessão",
-  'cookie_lifetime' => 60 * 60 * 24,
-  'cookie_path' => '/',
-  'cookie_secure' => true,
-  'cookie_httponly' => true,
-  'cookie_samesite' => 'Strict'
-]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $user = $_POST['user'] ?? '';
+  $password = $_POST['password'] ?? '';
 
-$_SESSION["usuario"] = "admin";
-
-setcookie('cookie', "valor do cookie", time() + 60 * 60);
-
-setcookie('teste', "testando", [
-  'expires' => time() + 60 * 60,
-  'path' => '/',
-  'secure' => true,
-  'httponly' => true,
-  'samesite' => 'Strict'
-]);
-
-if (isset($_GET['logout'])) {
-  $_SESSION = [];
-  session_destroy();
-
-  foreach ($_COOKIE as $nome => $valor) {
-    setcookie($nome, "", [
-      'expires' => time() - 60 * 60,
-      'path' => '/',
-      'secure' => true,
-      'httponly' => true,
-      'samesite' => 'Strict'
-    ]);
+  if ($user === 'admin' && $password === '1234') {
+    $_SESSION['usuario'] = $user;
+    header("Location: index.php?page=home");
+    exit;
+  } else {
+    $erro = "Usuário ou senha inválidos.";
+    include "./pages/login.php";
+    exit;
   }
 }
 
+if (!isset($_SESSION['usuario'])) {
+  header("Location: index.php?page=login");
+  exit;
+}
+
+$tarefas = $_SESSION['tarefas'] ?? [];
+$total = count($tarefas);
+$altas = count(array_filter($tarefas, fn($t) => $t['prioridade'] === 'high' || $t['prioridade'] === 'very-high'));
 ?>
 
-<h1>Dashboard</h1>
+<h1>Bem-vindo, <?= htmlspecialchars($_SESSION['usuario']) ?></h1>
+
+<p>Total de tarefas: <strong><?= $total ?></strong></p>
+<p>Tarefas de alta prioridade: <strong><?= $altas ?></strong></p>
+
+<a href="index.php?page=create">Criar Nova Tarefa</a><br>
+<a href="index.php?page=tasks">Ver Tarefas</a><br><br>
+
+<a href="index.php?logout=true">Sair</a>

@@ -1,20 +1,20 @@
 <h1>Formulário</h1>
 
-<form method="post" action="?page=create">
-  <label for="name">Nome da Tarefa:</label>
-  <input type="text" name="name" id="name"><br>
-  <br>
-  <label for="description">Descrição:</label>
-  <input type="textarea" name="description" id="description"><br>
-  <br>
-  <label for="responsible">Responsável:</label>
-  <input type="text" name="responsible" id="responsible"><br>
-  <br>
-  <label for="time">Prazo Final:</label>
-  <input type="date" name="time" id="time"><br>
-  <br>
-  <label for="priority">Prioridade</label>
-  <select name="priority" id="priority">
+<form method="post" action="tarefas.php">
+  <label for="nome">Nome da Tarefa:</label>
+  <input type="text" name="nome" id="nome" required><br><br>
+
+  <label for="descricao">Descrição:</label>
+  <input type="textarea" name="descricao" id="descricao" required><br><br>
+
+  <label for="responsavel">Responsável:</label>
+  <input type="text" name="responsavel" id="responsavel" required><br><br>
+
+  <label for="prazo">Prazo Final:</label>
+  <input type="date" name="prazo" id="prazo" required><br><br>
+
+  <label for="prioridade">Prioridade:</label>
+  <select name="prioridade" id="prioridade">
     <option value="very-high">Muito Alta</option>
     <option value="high">Alta</option>
     <option value="medium">Média</option>

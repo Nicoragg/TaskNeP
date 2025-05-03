@@ -1,4 +1,12 @@
 <?php
+session_start(); // << Necessário para sessões
+
+if (isset($_GET['logout'])) {
+  session_destroy();
+  header("Location: index.php?page=login");
+  exit;
+}
+
 $page = $_GET["page"] ?? "login";
 ?>
 <!DOCTYPE html>
@@ -7,7 +15,7 @@ $page = $_GET["page"] ?? "login";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula POST</title>
+  <title>Gerenciador de Tarefas</title>
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
 </head>
 
@@ -25,6 +33,7 @@ $page = $_GET["page"] ?? "login";
     default => "./pages/404.php",
   });
   echo "</main>";
+
   include_once "./footer.php";
   ?>
 </body>
