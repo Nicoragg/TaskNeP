@@ -1,0 +1,86 @@
+.card-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10vh;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.card-title h1 {
+  margin: 0;
+  color: #333;
+}
+
+.user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.user-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-width: 450px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.user-card h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.user-card p {
+  margin: 0.5rem 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.user-actions {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logout-button {
+  margin: 0;
+  padding: 0;
+  display: block;
+  width: 100%;
+  max-width: 150px;
+}
+
+.logout-button button {
+  background-color: #f7ff14;
+  width: 100%;
+  padding: 12px 0;
+  margin: 0 auto;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.logout-button button:hover {
+  background-color: #e6ee00;
+  transform: translateY(-2px);
+}

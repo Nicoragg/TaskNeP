@@ -64,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               $message = 'Usuário cadastrado com sucesso! Você já pode fazer login.';
               unset($_SESSION['signup_csrf_token']);
               $_SESSION['signup_csrf_token'] = bin2hex(random_bytes(32));
+
+              header('Location: index.php?success=1');
+              exit;
             } else {
               $message = 'Erro ao salvar o usuário. Tente novamente.';
             }

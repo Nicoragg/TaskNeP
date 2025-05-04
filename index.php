@@ -32,6 +32,10 @@ if (!isset($_SESSION['user'])) {
       <div class="error-message"><?php echo htmlspecialchars($_GET['error']); ?></div>
     <?php endif; ?>
 
+    <?php if (isset($_GET['success'])): ?>
+      <div class="success-message">Usuário cadastrado com sucesso! Faça login para continuar.</div>
+    <?php endif; ?>
+
     <form method="post" action="admin/index.php">
       <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
