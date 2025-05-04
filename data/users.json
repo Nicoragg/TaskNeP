@@ -1,12 +1,12 @@
 {
-    "admin": {
-        "password": "$2y$10$XsykF3vMZQBVkbhLQzT4\/Oduvi\/QlSlk4FdLv0pZ7Efd.sKIsQviG",
-        "email": "admin@admin.com",
-        "created_at": "2025-05-04 22:06:55"
-    },
-    "admin2": {
-        "password": "$2y$10$oko9ByHETw1onaUo2eur2eM5m5MNXz0DOM.izZI2UNYxA8GaniHLO",
-        "email": "admin2@admin.com",
-        "created_at": "2025-05-04 22:16:49"
-    }
+  "admin": {
+    "password": "$2y$10$XsykF3vMZQBVkbhLQzT4/Oduvi/QlSlk4FdLv0pZ7Efd.sKIsQviG",
+    "email": "admin@admin.com",
+    "created_at": "2025-05-04 22:06:55"
+  },
+  "admin2": {
+    "password": "$2y$10$oko9ByHETw1onaUo2eur2eM5m5MNXz0DOM.izZI2UNYxA8GaniHLO",
+    "email": "admin2@admin.com",
+    "created_at": "2025-05-04 22:16:49"
+  }
 }

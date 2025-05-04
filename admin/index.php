@@ -4,15 +4,6 @@ session_regenerate_id(true);
 
 require_once "../helpers/functions.php";
 
-function loadUsers()
-{
-  $usersFile = __DIR__ . '/../data/users.json';
-  if (file_exists($usersFile)) {
-    return json_decode(file_get_contents($usersFile), true);
-  }
-  return [];
-}
-
 $validUsers = loadUsers();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['user'])) {
