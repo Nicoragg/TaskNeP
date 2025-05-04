@@ -2,33 +2,39 @@
 session_start();
 session_regenerate_id(true);
 
-$usuarioEsperado = 'admin';
-$senhaHashEsperada = password_hash('123456', PASSWORD_DEFAULT);
+require_once "../helpers/functions.php";
+
+$validUsers = [
+  'admin' => password_hash('admin', PASSWORD_DEFAULT),
+  'admin2' => password_hash('admin2', PASSWORD_DEFAULT),
+  'admin3' => password_hash('admin3', PASSWORD_DEFAULT)
+];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['user'])) {
-  $tokenEnv = $_POST['csrf_token'] ?? '';
-  if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $tokenEnv)) {
+  $csrfToken = $_POST['csrf_token'] ?? '';
+  if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
     die('Falha na validação CSRF.');
   }
 
-  $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
-  $senha = $_POST['senha'] ?? '';
+  $user = validateInput($_POST['user'] ?? '');
+  $password = $_POST['password'] ?? '';
 
-  if ($login === $usuarioEsperado && password_verify($senha, $senhaHashEsperada)) {
-    $_SESSION['user'] = $login;
+  if (array_key_exists($user, $validUsers) && password_verify($password, $validUsers[$user])) {
+    $_SESSION['user'] = $user;
     unset($_SESSION['csrf_token']);
-    header('Location: admin/index.php');
+    header('Location: index.php');
     exit;
   } else {
-    $erro = 'Usuário ou senha inválidos';
+    $error = 'Usuário ou senha inválidos';
   }
 }
 
 if (!isset($_SESSION['user'])) {
-  header('Location: ../index.php?error=' . urlencode($erro ?? ''));
+  header('Location: ../index.php?error=' . urlencode($error ?? ''));
   exit;
 }
 
+$page = getInputSafely('GET', 'page', 'home');
 ?>
 
 <!DOCTYPE html>

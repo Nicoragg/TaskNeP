@@ -23,22 +23,24 @@ if (!isset($_SESSION['user'])) {
 
 
 <body>
-  <h1>Login</h1>
-  <?php if (!empty($_GET['error'])): ?>
-    <p style="color:red;"><?php echo htmlspecialchars($_GET['error']); ?></p>
-  <?php endif; ?>
+  <div class="login">
+    <h1>Task Manager</h1>
+    <?php if (!empty($_GET['error'])): ?>
+      <div class="error-message"><?php echo htmlspecialchars($_GET['error']); ?></div>
+    <?php endif; ?>
 
-  <form method="post" action="admin/index.php">
-    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+    <form method="post" action="admin/index.php">
+      <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
-    <label for="login">Usuário:</label><br>
-    <input type="text" name="login" id="login" required><br><br>
+      <label for="user">Usuário:</label>
+      <input type="text" name="user" id="user" required>
 
-    <label for="senha">Senha:</label><br>
-    <input type="password" name="senha" id="senha" required><br><br>
+      <label for="password">Senha:</label>
+      <input type="password" name="password" id="password" required>
 
-    <button type="submit">Entrar</button>
-  </form>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 </body>
 
 </html>
