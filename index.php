@@ -1,13 +1,15 @@
 <?php
-session_start(); // << Necessário para sessões
+session_start();
+session_regenerate_id(true);
 
-if (isset($_GET['logout'])) {
-  session_destroy();
-  header("Location: index.php?page=login");
+if (!isset($_SESSION['user'])) {
+  if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  }
+} else {
+  header('Location: admin/index.php');
   exit;
 }
-
-$page = $_GET["page"] ?? "login";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,27 +17,28 @@ $page = $_GET["page"] ?? "login";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerenciador de Tarefas</title>
+  <title>Task Manager</title>
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
 </head>
 
+
 <body>
-  <?php
-  require_once "./header.php";
+  <h1>Login</h1>
+  <?php if (!empty($_GET['error'])): ?>
+    <p style="color:red;"><?php echo htmlspecialchars($_GET['error']); ?></p>
+  <?php endif; ?>
 
-  echo "<main>";
-  require_once(match ($page) {
-    "login" => "./pages/login.php",
-    "home" => "./pages/home.php",
-    "create" => "./pages/form.php",
-    "user" => "./pages/user.php",
-    "tasks" => "./pages/tarefas.php",
-    default => "./pages/404.php",
-  });
-  echo "</main>";
+  <form method="post" action="admin/index.php">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
 
-  include_once "./footer.php";
-  ?>
+    <label for="login">Usuário:</label><br>
+    <input type="text" name="login" id="login" required><br><br>
+
+    <label for="senha">Senha:</label><br>
+    <input type="password" name="senha" id="senha" required><br><br>
+
+    <button type="submit">Entrar</button>
+  </form>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <header>
-  <img src="assets\images\tarefa.png" alt="tarefa-logo">
+  <img src="../assets/images/tarefa.png" alt="tarefa-logo">
 
   <nav>
     <a href="?page=home">Dashboard</a>
