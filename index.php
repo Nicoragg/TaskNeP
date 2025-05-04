@@ -1,4 +1,7 @@
 <?php
+// Pedro Henrique Brugnolo - 34251154
+// Nicolas Gonçalves de Souza - 33710031
+
 session_start();
 session_regenerate_id(true);
 
@@ -40,6 +43,7 @@ if (!isset($_SESSION['user'])) {
 
       <button type="submit">Entrar</button>
     </form>
+    <p>Não tem uma conta? <a href="signup.php">Cadastre-se</a></p>
   </div>
 </body>
 

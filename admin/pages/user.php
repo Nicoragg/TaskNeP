@@ -41,8 +41,8 @@
 
 <div class="user-container">
   <div class="user-card">
-    <h2>Jhon Doe</h2>
-    <p>john@example.com</p>
+    <h2><?= $_SESSION['user']; ?></h2>
+    <p><?= $_SESSION['email']; ?></p>
     <div class="user-actions">
       <a href="?page=logout" class="logout-button">
         <button type="button">Sair</button>
