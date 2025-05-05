@@ -88,11 +88,17 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
   const filterResponsible = document.getElementById('filter-responsible');
   const filterPriority = document.getElementById('filter-priority');
   const filterStatus = document.getElementById('filter-status');
   const cards = document.querySelectorAll('.board .card');
+  const modal = document.getElementById('comments-modal');
+  const listEl = document.getElementById('comments-list');
+  const form = document.getElementById('comment-form');
+  let csrfToken = '<?= $_SESSION['task_csrf_token'] ?? "" ?>';
+  let currentTaskId = null;
 
   function applyFilters() {
     const resVal = filterResponsible.value;
@@ -111,11 +117,6 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
   filterResponsible.addEventListener('change', applyFilters);
   filterPriority.addEventListener('change', applyFilters);
   filterStatus.addEventListener('change', applyFilters);
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>
-  let csrfToken = '<?= $_SESSION['task_csrf_token'] ?? "" ?>';
 
   document.querySelectorAll('.column .cards').forEach(columnEl => {
     new Sortable(columnEl, {
@@ -126,7 +127,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
         const taskId = cardEl.dataset.id;
         const newStatus = cardEl.closest('.column').dataset.statusColumn;
 
-        fetch('./apis/update_task_status', {
+        fetch('./apis/update_task_status.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -161,30 +162,31 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
       }
     });
   });
-</script>
-
-<script>
-  const modal = document.getElementById('comments-modal');
-  const listEl = document.getElementById('comments-list');
-  const form = document.getElementById('comment-form');
-  let currentTaskId = null;
 
   document.querySelectorAll('.btn-comments').forEach(btn => {
     btn.addEventListener('click', () => {
       currentTaskId = btn.dataset.taskId;
       listEl.innerHTML = '';
       fetch(`./apis/get_comments.php?task_id=${currentTaskId}`)
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
-          data.comments.forEach(c => {
-            const div = document.createElement('div');
-            div.classList.add('comment');
-            div.innerHTML = `<strong>${c.author}</strong>
-                           <small>${c.created_at}</small>
-                           <p>${c.message}</p>`;
-            listEl.appendChild(div);
-          });
-          modal.style.display = 'block';
+          if (data.success) {
+            data.comments.forEach(c => {
+              const div = document.createElement('div');
+              div.classList.add('comment');
+              div.innerHTML = `<strong>${c.author}</strong>
+                             <small>${new Date(c.created_at).toLocaleString('pt-BR')}</small>
+                             <p>${c.message}</p>`;
+              listEl.appendChild(div);
+            });
+            modal.style.display = 'block';
+          } else {
+            alert('Erro ao carregar comentários: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Erro na requisição:', error);
+          alert('Falha na comunicação com o servidor');
         });
     });
   });
@@ -197,6 +199,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
     e.preventDefault();
     const msg = form.message.value.trim();
     if (!msg) return;
+
     fetch('./apis/update_task_comments.php', {
         method: 'POST',
         headers: {
@@ -204,13 +207,14 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
         },
         body: JSON.stringify({
           task_id: currentTaskId,
-          message: msg
+          message: msg,
+          csrf_token: csrfToken
         })
       })
-      .then(r => r.json())
-      .then(resp => {
-        if (resp.success) {
-          const c = resp.comment;
+      .then(response => r.json())
+      .then(data => {
+        if (data.success) {
+          const c = data.comment;
           const div = document.createElement('div');
           div.classList.add('comment');
           div.innerHTML = `<strong>${c.author}</strong>
@@ -218,11 +222,20 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
                        <p>${c.message}</p>`;
           listEl.prepend(div);
           form.reset();
+
           const badge = document.querySelector(`.btn-comments[data-task-id="${currentTaskId}"]`);
-          badge.textContent = `Comentários (${resp.total_comments})`;
+          badge.textContent = `Comentários (${data.total_comments})`;
+
+          if (data.newCsrfToken) {
+            csrfToken = data.newCsrfToken;
+          }
         } else {
-          alert('Erro: ' + resp.error);
+          alert('Erro: ' + data.error);
         }
+      })
+      .catch(error => {
+        console.error('Erro na requisição:', error);
+        alert('Falha na comunicação com o servidor');
       });
   });
 </script>

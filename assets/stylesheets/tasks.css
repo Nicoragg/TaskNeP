@@ -187,3 +187,34 @@
 #comment-form button {
   margin-top: 0.5rem;
 }
+
+.btn-comments {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 5px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-color);
+  background: rgba(247, 255, 20, 0.1);
+  border: 1px solid var(--text-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-comments:hover {
+  background: var(--primary-color-hover);
+  transform: translateY(-1px);
+}
+
+.btn-comments:active {
+  transform: translateY(0);
+}
+
+.btn-comments::before {
+  content: "💬";
+  font-size: 0.9rem;
+}
