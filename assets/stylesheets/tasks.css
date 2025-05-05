@@ -142,3 +142,48 @@
 .cards::-webkit-scrollbar-track {
   background: transparent;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: var(--container-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+.comment {
+  border-bottom: 1px solid var(--input-border);
+  padding: 0.75rem 0;
+}
+.comment:last-child {
+  border: none;
+}
+.comment strong {
+  font-size: 0.9rem;
+}
+.comment small {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+.comment p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+}
+#comment-form textarea {
+  margin-top: 1rem;
+}
+#comment-form button {
+  margin-top: 0.5rem;
+}

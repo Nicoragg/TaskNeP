@@ -66,11 +66,26 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
             <h3><?= htmlspecialchars($task['title']) ?></h3>
             <p><?= nl2br(htmlspecialchars($task['description'])) ?></p>
             <small>Prazo: <?= htmlspecialchars(dateParserToBrazilianFormat($task['time'])) ?></small>
+            <button class="btn-comments" data-task-id="<?= $task['id'] ?>">
+              Comentários (<?= count($task['comments']) ?>)
+            </button>
           </div>
         <?php endforeach; ?>
       </div>
     </div>
   <?php endforeach; ?>
+</div>
+
+<div id="comments-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Comentários</h3>
+    <div id="comments-list"></div>
+    <form id="comment-form">
+      <textarea name="message" rows="3" required placeholder="Escreva seu comentário…"></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+    <button class="modal-close">Fechar</button>
+  </div>
 </div>
 
 <script>
@@ -111,7 +126,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
         const taskId = cardEl.dataset.id;
         const newStatus = cardEl.closest('.column').dataset.statusColumn;
 
-        fetch('./apis/update.php', {
+        fetch('./apis/update_task_status', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -145,5 +160,69 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
           });
       }
     });
+  });
+</script>
+
+<script>
+  const modal = document.getElementById('comments-modal');
+  const listEl = document.getElementById('comments-list');
+  const form = document.getElementById('comment-form');
+  let currentTaskId = null;
+
+  document.querySelectorAll('.btn-comments').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTaskId = btn.dataset.taskId;
+      listEl.innerHTML = '';
+      fetch(`./apis/get_comments.php?task_id=${currentTaskId}`)
+        .then(res => res.json())
+        .then(data => {
+          data.comments.forEach(c => {
+            const div = document.createElement('div');
+            div.classList.add('comment');
+            div.innerHTML = `<strong>${c.author}</strong>
+                           <small>${c.created_at}</small>
+                           <p>${c.message}</p>`;
+            listEl.appendChild(div);
+          });
+          modal.style.display = 'block';
+        });
+    });
+  });
+
+  document.querySelector('.modal-close').addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const msg = form.message.value.trim();
+    if (!msg) return;
+    fetch('./apis/update_task_comments.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          task_id: currentTaskId,
+          message: msg
+        })
+      })
+      .then(r => r.json())
+      .then(resp => {
+        if (resp.success) {
+          const c = resp.comment;
+          const div = document.createElement('div');
+          div.classList.add('comment');
+          div.innerHTML = `<strong>${c.author}</strong>
+                       <small>${c.created_at}</small>
+                       <p>${c.message}</p>`;
+          listEl.prepend(div);
+          form.reset();
+          const badge = document.querySelector(`.btn-comments[data-task-id="${currentTaskId}"]`);
+          badge.textContent = `Comentários (${resp.total_comments})`;
+        } else {
+          alert('Erro: ' + resp.error);
+        }
+      });
   });
 </script>

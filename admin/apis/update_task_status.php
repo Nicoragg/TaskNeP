@@ -86,7 +86,7 @@ try {
     'newCsrfToken' => $_SESSION['task_csrf_token']
   ]);
 } catch (Exception $e) {
-  error_log('Error in update.php: ' . $e->getMessage());
+  error_log('Error in update_task_status: ' . $e->getMessage());
   echo json_encode(['success' => false, 'error' => 'Erro no servidor: ' . $e->getMessage()]);
   exit;
 }

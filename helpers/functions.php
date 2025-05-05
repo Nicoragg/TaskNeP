@@ -80,19 +80,20 @@ function loadTasks(): array
 {
   $file = __DIR__ . '/../data/tasks.json';
   if (!file_exists($file)) {
-    if (!is_dir(dirname($file))) {
-      mkdir(dirname($file), 0755, true);
-    }
+    if (!is_dir(dirname($file))) mkdir(dirname($file), 0755, true);
     file_put_contents($file, json_encode([], JSON_PRETTY_PRINT));
   }
-  $json = file_get_contents($file);
-  $tasks = json_decode($json, true);
-  return is_array($tasks) ? $tasks : [];
+  $tasks = json_decode(file_get_contents($file), true);
+  foreach ($tasks as &$task) {
+    if (!isset($task['comments']) || !is_array($task['comments'])) {
+      $task['comments'] = [];
+    }
+  }
+  return $tasks;
 }
 
 function saveTasks(array $tasks): bool
 {
   $file = __DIR__ . '/../data/tasks.json';
-  $json = json_encode($tasks, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-  return file_put_contents($file, $json) !== false;
+  return file_put_contents($file, json_encode($tasks, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
 }
