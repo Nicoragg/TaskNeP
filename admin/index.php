@@ -1,4 +1,8 @@
 <?php
+/*
+Pedro Henrique Brugnolo - 34251154
+Nicolas Gonçalves de Souza - 33710031
+*/
 session_start();
 session_regenerate_id(true);
 
@@ -59,6 +63,9 @@ $page = getInputSafely('GET', 'page', 'home');
   }
   if (isset($page) && $page === 'logs') {
     echo '<link rel="stylesheet" href="../assets/stylesheets/logs.css">';
+  }
+  if (isset($page) && $page === 'home') {
+    echo '<link rel="stylesheet" href="../assets/stylesheets/dashboard.css">';
   }
   ?>
 </head>

@@ -1,71 +1,71 @@
 [
-    {
-        "timestamp": "2025-05-05 09:07:04",
-        "user": "admin",
-        "task_id": "68183fc7c70262.39967222",
-        "action": "status_updated",
-        "details": {
-            "from": "ongoing",
-            "to": "completed"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:07:40",
-        "user": "admin",
-        "task_id": "68187fdc9f56b6.47306349",
-        "action": "created",
-        "details": {
-            "title": "Teste 4",
-            "priority": "very-low"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:09:45",
-        "user": "admin",
-        "task_id": "68183fc7c70262.39967222",
-        "action": "status_updated",
-        "details": {
-            "from": "completed",
-            "to": "completed"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:09:48",
-        "user": "admin",
-        "task_id": "68183f76e6f4d3.16928762",
-        "action": "status_updated",
-        "details": {
-            "from": "ongoing",
-            "to": "ongoing"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:09:49",
-        "user": "admin",
-        "task_id": "6818402fda19f2.53141939",
-        "action": "status_updated",
-        "details": {
-            "from": "ongoing",
-            "to": "completed"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:09:51",
-        "user": "admin",
-        "task_id": "6818402fda19f2.53141939",
-        "action": "status_updated",
-        "details": {
-            "from": "completed",
-            "to": "ongoing"
-        }
-    },
-    {
-        "timestamp": "2025-05-05 09:11:12",
-        "user": "admin",
-        "task_id": "68187fdc9f56b6.47306349",
-        "action": "comment_added",
-        "details": {
-            "comment": "Essa tarefa tem uma prioridade baixa"
-        }
+  {
+    "timestamp": "2025-05-05 09:07:04",
+    "user": "admin",
+    "task_id": "68183fc7c70262.39967222",
+    "action": "status_updated",
+    "details": {
+      "from": "ongoing",
+      "to": "completed"
     }
+  },
+  {
+    "timestamp": "2025-05-05 09:07:40",
+    "user": "admin",
+    "task_id": "68187fdc9f56b6.47306349",
+    "action": "created",
+    "details": {
+      "title": "Teste 4",
+      "priority": "very-low"
+    }
+  },
+  {
+    "timestamp": "2025-05-05 09:09:45",
+    "user": "admin",
+    "task_id": "68183fc7c70262.39967222",
+    "action": "status_updated",
+    "details": {
+      "from": "completed",
+      "to": "completed"
+    }
+  },
+  {
+    "timestamp": "2025-05-05 09:09:48",
+    "user": "admin",
+    "task_id": "68183f76e6f4d3.16928762",
+    "action": "status_updated",
+    "details": {
+      "from": "ongoing",
+      "to": "ongoing"
+    }
+  },
+  {
+    "timestamp": "2025-05-05 09:09:49",
+    "user": "admin",
+    "task_id": "6818402fda19f2.53141939",
+    "action": "status_updated",
+    "details": {
+      "from": "ongoing",
+      "to": "completed"
+    }
+  },
+  {
+    "timestamp": "2025-05-05 09:09:51",
+    "user": "admin",
+    "task_id": "6818402fda19f2.53141939",
+    "action": "status_updated",
+    "details": {
+      "from": "completed",
+      "to": "ongoing"
+    }
+  },
+  {
+    "timestamp": "2025-05-05 09:11:12",
+    "user": "admin",
+    "task_id": "68187fdc9f56b6.47306349",
+    "action": "comment_added",
+    "details": {
+      "comment": "Essa tarefa tem uma prioridade baixa"
+    }
+  }
 ]
