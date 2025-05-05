@@ -37,6 +37,7 @@ form {
 .success-message {
   width: 100%;
   padding: 10px;
+  max-width: 400px;
   margin-bottom: 1rem;
   border-radius: 5px;
   font-size: 0.9rem;

@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Cadastre-se</h1>
 
     <?php if (!empty($message)): ?>
-      <div class="<?php echo strpos($message, 'sucesso') !== false ? 'success-message' : 'error-message'; ?>">
+      <div class="error-message">
         <?php echo htmlspecialchars($message); ?>
       </div>
     <?php endif; ?>

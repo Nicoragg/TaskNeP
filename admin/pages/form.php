@@ -1,12 +1,70 @@
 <?php
 require_once "../helpers/functions.php";
+
+if (empty($_SESSION['task_csrf_token'])) {
+  $_SESSION['task_csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$message = '';
+
+if (isset($_GET['page']) && $_GET['page'] === 'create') {
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    if (
+      empty($_SESSION['task_csrf_token'])
+      || !hash_equals($_SESSION['task_csrf_token'], $csrfToken)
+    ) {
+      $message = 'Falha na validação CSRF.';
+    } else {
+      $title       = trim($_POST['title'] ?? '');
+      $description = trim($_POST['description'] ?? '');
+      $time    = $_POST['time'] ?? '';
+      $status      = $_POST['status'] ?? '';
+      $responsible = $_POST['responsible'] ?? '';
+      $priority    = $_POST['priority'] ?? '';
+
+      if (!$title || !$description || !$time) {
+        $message = 'Título, descrição e prazo são obrigatórios.';
+      } else {
+        $tasks = loadTasks();
+
+        $tasks[] = [
+          'id'          => uniqid('', true),
+          'title'       => $title,
+          'description' => $description,
+          'time'        => $time,
+          'status'      => $status,
+          'responsible' => $responsible,
+          'priority'    => $priority,
+          'created_at'  => date('Y-m-d H:i:s'),
+        ];
+
+        if (saveTasks($tasks)) {
+          unset($_SESSION['task_csrf_token']);
+          $_SESSION['task_csrf_token'] = bin2hex(random_bytes(32));
+          header('Location: index.php?page=list&success=1');
+          exit;
+        } else {
+          $message = 'Erro ao salvar a tarefa. Tente novamente.';
+        }
+      }
+    }
+  }
+}
+
 $users = loadUsers();
 ?>
 
 <h1>Criar Nova Tarefa</h1>
 
+<?php if ($message): ?>
+  <div class="error-message"><?= htmlspecialchars($message) ?></div>
+<?php endif; ?>
+
 <div class="content-wrapper">
-  <form method=" post" action="?page=create">
+  <form method="post" action="?page=create">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['task_csrf_token'] ?>">
+
     <label for="title">Título:</label>
     <input type="text" name="title" id="title" required>
 

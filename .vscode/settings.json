@@ -8,5 +8,6 @@
   "files.autoGuessEncoding": true,
   "editor.detectIndentation": false,
   "files.encoding": "utf8",
-  "files.eol": "\n"
+  "files.eol": "\n",
+  "cSpell.words": ["csrf"]
 }
