@@ -62,7 +62,7 @@ $users = loadUsers();
 <?php endif; ?>
 
 <div class="content-wrapper">
-  <form method="post" action="?page=tasks">
+  <form method="post" action="?page=create">
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['task_csrf_token'] ?>">
 
     <label for="title">Título:</label>

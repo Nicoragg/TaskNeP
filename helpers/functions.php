@@ -51,7 +51,7 @@ function validateEmail(string $email): array
 function dateParserToBrazilianFormat($date)
 {
   $datetime = new DateTime($date);
-  return $datetime->format('d/m/Y H:i:s');
+  return $datetime->format('d/m/Y H:i');
 }
 
 function loadUsers(): array

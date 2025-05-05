@@ -1,4 +1,3 @@
-/* --- filtros --- */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -28,7 +27,6 @@
   box-shadow: 0 0 0 3px rgba(247, 255, 20, 0.2);
 }
 
-/* --- quadro Kanban --- */
 .board {
   display: flex;
   gap: 1rem;
@@ -66,7 +64,6 @@
   overflow-y: auto;
 }
 
-/* --- cartões --- */
 .card {
   background: var(--container-bg);
   border: 1px solid var(--input-border);
@@ -102,7 +99,6 @@
   opacity: 0.7;
 }
 
-/* badges para prioridade (opcional) */
 .card[data-priority="very-high"]::before,
 .card[data-priority="high"]::before,
 .card[data-priority="medium"]::before,
@@ -119,7 +115,6 @@
   text-transform: capitalize;
 }
 
-/* scrollbar customizada (WebKit) */
 .cards::-webkit-scrollbar {
   width: 8px;
 }
