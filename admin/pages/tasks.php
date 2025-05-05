@@ -148,14 +148,14 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
           .then(response => {
             if (!response.ok) {
               return response.text().then(text => {
-                throw new Error(`Server returned ${response.status}: ${text}`);
+                throw new Error(`Erro ao atualizar status da tarefa: ${response.status}: ${text}`);
               });
             }
             return response.json();
           })
           .then(data => {
             if (!data.success) {
-              alert('Erro ao atualizar tarefa: ' + data.error);
+              alert('Erro ao atualizar status da tarefa: ' + data.error);
               window.location.reload();
             } else if (data.newCsrfToken) {
               csrfToken = data.newCsrfToken;
