@@ -50,6 +50,11 @@ $page = getInputSafely('GET', 'page', 'home');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Manager</title>
   <link rel="stylesheet" href="../assets/stylesheets/style.css">
+  <?php
+  if (isset($page) && $page === 'create') {
+    echo '<link rel="stylesheet" href="../assets/stylesheets/form.css">';
+  }
+  ?>
 </head>
 
 <body>

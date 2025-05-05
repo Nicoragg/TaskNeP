@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro - Task Manager</title>
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
+  <link rel="stylesheet" href="./assets/stylesheets/auth.css">
 </head>
 
 <body>

@@ -6,7 +6,5 @@
     <a href="?page=create">Criar Tarefa</a>
     <a href="?page=tasks">Tarefas</a>
     <a href="?page=user">Perfil</a>
-    </div>
   </nav>
-
 </header>
