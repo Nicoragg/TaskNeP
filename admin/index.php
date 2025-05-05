@@ -54,6 +54,9 @@ $page = getInputSafely('GET', 'page', 'home');
   if (isset($page) && $page === 'create') {
     echo '<link rel="stylesheet" href="../assets/stylesheets/form.css">';
   }
+  if (isset($page) && $page === 'tasks') {
+    echo '<link rel="stylesheet" href="../assets/stylesheets/tasks.css">';
+  }
   ?>
 </head>
 
@@ -67,7 +70,7 @@ $page = getInputSafely('GET', 'page', 'home');
     "home" => "./pages/home.php",
     "create" => "./pages/form.php",
     "user" => "./pages/user.php",
-    "tasks" => "./pages/tarefas.php",
+    "tasks" => "./pages/tasks.php",
     default => "./pages/404.php",
   });
   echo "</main>";

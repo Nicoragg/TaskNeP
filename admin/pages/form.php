@@ -42,7 +42,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'create') {
         if (saveTasks($tasks)) {
           unset($_SESSION['task_csrf_token']);
           $_SESSION['task_csrf_token'] = bin2hex(random_bytes(32));
-          header('Location: index.php?page=list&success=1');
+          header('Location: index.php?page=tasks&success=1');
           exit;
         } else {
           $message = 'Erro ao salvar a tarefa. Tente novamente.';
@@ -62,7 +62,7 @@ $users = loadUsers();
 <?php endif; ?>
 
 <div class="content-wrapper">
-  <form method="post" action="?page=create">
+  <form method="post" action="?page=tasks">
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['task_csrf_token'] ?>">
 
     <label for="title">Título:</label>
@@ -72,7 +72,7 @@ $users = loadUsers();
     <textarea name="description" id="description" rows="4" required></textarea>
 
     <label for="time">Prazo:</label>
-    <input type="date" name="time" id="time" required>
+    <input type="datetime-local" name="time" id="time" required>
 
     <label for="status">Status:</label>
     <select name="status" id="status">

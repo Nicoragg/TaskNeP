@@ -48,6 +48,12 @@ function validateEmail(string $email): array
   return ['valid' => true];
 }
 
+function dateParserToBrazilianFormat($date)
+{
+  $datetime = new DateTime($date);
+  return $datetime->format('d/m/Y H:i:s');
+}
+
 function loadUsers(): array
 {
   $usersFile = __DIR__ . '/../data/users.json';
