@@ -5,12 +5,12 @@ ini_set('display_errors', 1);
 session_start();
 header('Content-Type: application/json');
 
-if (!file_exists('../helpers/functions.php')) {
+if (!file_exists('../../helpers/functions.php')) {
   echo json_encode(['success' => false, 'error' => 'functions.php not found']);
   exit;
 }
 
-require_once '../helpers/functions.php';
+require_once '../../helpers/functions.php';
 
 try {
   $csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';

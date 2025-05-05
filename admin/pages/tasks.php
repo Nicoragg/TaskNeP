@@ -111,7 +111,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
         const taskId = cardEl.dataset.id;
         const newStatus = cardEl.closest('.column').dataset.statusColumn;
 
-        fetch('update.php', {
+        fetch('./apis/update.php', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
