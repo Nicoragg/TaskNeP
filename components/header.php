@@ -5,6 +5,7 @@
     <a href="?page=home">Dashboard</a>
     <a href="?page=create">Criar Tarefa</a>
     <a href="?page=tasks">Tarefas</a>
+    <a href="?page=logs">Registros</a>
     <a href="?page=user">Perfil</a>
   </nav>
 </header>

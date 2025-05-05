@@ -72,6 +72,10 @@ try {
         'created_at' => date('Y-m-d H:i:s'),
       ];
 
+      addLog($_SESSION['user'], $taskId, 'comment_added', [
+        'comment' => $message
+      ]);
+
       array_unshift($t['comments'], $newComment);
       $t['updated_at'] = date('Y-m-d H:i:s');
       $added = true;

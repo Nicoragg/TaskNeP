@@ -97,3 +97,31 @@ function saveTasks(array $tasks): bool
   $file = __DIR__ . '/../data/tasks.json';
   return file_put_contents($file, json_encode($tasks, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
 }
+
+
+function loadLogs(): array
+{
+  $file = __DIR__ . '/../data/logs.json';
+  if (!file_exists($file)) {
+    if (!is_dir(dirname($file))) {
+      mkdir(dirname($file), 0755, true);
+    }
+    file_put_contents($file, json_encode([], JSON_PRETTY_PRINT));
+  }
+  $logs = json_decode(file_get_contents($file), true);
+  return is_array($logs) ? $logs : [];
+}
+
+function addLog(string $user, ?string $taskId, string $action, array $details = []): bool
+{
+  $logs = loadLogs();
+  $logs[] = [
+    'timestamp' => date('Y-m-d H:i:s'),
+    'user'      => $user,
+    'task_id'   => $taskId,
+    'action'    => $action,
+    'details'   => $details,
+  ];
+  $file = __DIR__ . '/../data/logs.json';
+  return file_put_contents($file, json_encode($logs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
+}

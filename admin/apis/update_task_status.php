@@ -61,6 +61,11 @@ try {
 
   foreach ($tasks as &$task) {
     if ($task['id'] === $taskId) {
+      addLog($_SESSION['user'], $taskId, 'status_updated', [
+        'from' => $task['status'],
+        'to'   => $newStatus,
+      ]);
+
       $task['status']     = $newStatus;
       $task['updated_at'] = date('Y-m-d H:i:s');
       $updated = true;

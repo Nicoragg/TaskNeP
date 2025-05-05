@@ -27,9 +27,10 @@ if (isset($_GET['page']) && $_GET['page'] === 'create') {
         $message = 'Título, descrição e prazo são obrigatórios.';
       } else {
         $tasks = loadTasks();
+        $newTaskId = uniqid('', true);
 
         $tasks[] = [
-          'id'          => uniqid('', true),
+          'id'          => $newTaskId,
           'title'       => $title,
           'description' => $description,
           'time'        => $time,
@@ -41,6 +42,10 @@ if (isset($_GET['page']) && $_GET['page'] === 'create') {
         ];
 
         if (saveTasks($tasks)) {
+          addLog($_SESSION['user'], $newTaskId, 'created', [
+            'title' => $title,
+            'priority' => $priority,
+          ]);
           unset($_SESSION['task_csrf_token']);
           $_SESSION['task_csrf_token'] = bin2hex(random_bytes(32));
           header('Location: index.php?page=tasks&success=1');
