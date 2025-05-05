@@ -1,5 +1,10 @@
 <?php
 require_once "../helpers/functions.php";
+
+if (empty($_SESSION['task_csrf_token'])) {
+  $_SESSION['task_csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $tasks = loadTasks();
 $responsibles = array_unique(array_column($tasks, 'responsible'));
 $priorities  = array_unique(array_column($tasks, 'priority'));
@@ -81,8 +86,10 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
     <h3>Comentários</h3>
     <div id="comments-list"></div>
     <form id="comment-form">
-      <textarea name="message" rows="3" required placeholder="Escreva seu comentário…"></textarea>
-      <button type="submit">Enviar</button>
+      <textarea name="message" rows="3" required placeholder="Escreva seu comentário..."></textarea>
+      <div>
+        <button type="submit">Enviar</button>
+      </div>
     </form>
     <button class="modal-close">Fechar</button>
   </div>
@@ -179,7 +186,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
                              <p>${c.message}</p>`;
               listEl.appendChild(div);
             });
-            modal.style.display = 'block';
+            modal.style.display = 'flex';
           } else {
             alert('Erro ao carregar comentários: ' + data.error);
           }
@@ -211,7 +218,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
           csrf_token: csrfToken
         })
       })
-      .then(response => r.json())
+      .then(response => response.json())
       .then(data => {
         if (data.success) {
           const c = data.comment;
@@ -237,5 +244,11 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
         console.error('Erro na requisição:', error);
         alert('Falha na comunicação com o servidor');
       });
+  });
+
+  window.addEventListener('click', event => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
   });
 </script>

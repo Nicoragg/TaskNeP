@@ -153,34 +153,133 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
+
 .modal-content {
   background: var(--container-bg);
   padding: 1.5rem;
   border-radius: 12px;
   max-width: 500px;
-  width: 100%;
+  width: 90%;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(0);
+  animation: modalFadeIn 0.3s ease;
 }
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+#comments-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding-right: 5px;
+}
+
+#comment-form {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#comment-form textarea {
+  margin: 0;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 150px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+#comment-form button {
+  align-self: flex-end;
+  width: auto;
+  min-width: 100px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.modal-close {
+  width: auto;
+  min-width: 100px;
+  padding: 8px 16px;
+  margin-top: 0;
+  font-size: 0.9rem;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  float: right;
+}
+
+.modal-close:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+#comments-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#comments-list::-webkit-scrollbar-thumb {
+  background: var(--input-border);
+  border-radius: 3px;
+}
+
+#comments-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .comment {
   border-bottom: 1px solid var(--input-border);
   padding: 0.75rem 0;
 }
+
 .comment:last-child {
   border: none;
 }
+
 .comment strong {
   font-size: 0.9rem;
 }
+
 .comment small {
   font-size: 0.75rem;
   color: var(--text-color);
   opacity: 0.6;
+  margin-left: 0.5rem;
 }
+
 .comment p {
   margin: 0.5rem 0 0;
   font-size: 0.875rem;
 }
+
 #comment-form textarea {
   margin-top: 1rem;
 }
