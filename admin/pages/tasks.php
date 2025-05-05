@@ -100,6 +100,8 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
+  let csrfToken = '<?= $_SESSION['task_csrf_token'] ?? "" ?>';
+
   document.querySelectorAll('.column .cards').forEach(columnEl => {
     new Sortable(columnEl, {
       group: 'tasks',
@@ -113,7 +115,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-CSRF-Token': '<?= $_SESSION['task_csrf_token'] ?? "" ?>'
+              'X-CSRF-Token': csrfToken
             },
             body: JSON.stringify({
               id: taskId,
@@ -133,10 +135,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
               alert('Erro ao atualizar tarefa: ' + data.error);
               window.location.reload();
             } else if (data.newCsrfToken) {
-              const csrfToken = data.newCsrfToken;
-              document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
-                input.value = csrfToken;
-              });
+              csrfToken = data.newCsrfToken;
             }
           })
           .catch((error) => {
