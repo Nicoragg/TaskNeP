@@ -23,7 +23,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
     <select id="filter-priority">
       <option value=""></option>
       <?php foreach ($priorities as $p): ?>
-        <option value="<?= htmlspecialchars($p) ?>"><?= htmlspecialchars(ucfirst($p)) ?></option>
+        <option value="<?= htmlspecialchars($p) ?>"><?= htmlspecialchars(translatePriority($p)) ?></option>
       <?php endforeach; ?>
     </select>
   </label>
@@ -59,6 +59,9 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
             data-responsible="<?= htmlspecialchars($task['responsible']) ?>"
             data-priority="<?= htmlspecialchars($task['priority']) ?>"
             data-status="<?= htmlspecialchars($task['status']) ?>">
+            <span class="badge priority priority-<?= $task['priority'] ?>">
+              <?= translatePriority($task['priority']) ?>
+            </span>
             <h3><?= htmlspecialchars($task['title']) ?></h3>
             <p><?= nl2br(htmlspecialchars($task['description'])) ?></p>
             <small>Prazo: <?= htmlspecialchars(dateParserToBrazilianFormat($task['time'])) ?></small>

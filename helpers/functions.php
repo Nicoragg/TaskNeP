@@ -54,6 +54,19 @@ function dateParserToBrazilianFormat($date)
   return $datetime->format('d/m/Y H:i');
 }
 
+function translatePriority($priority): string
+{
+  $translations = [
+    'very-high' => 'Muito Alta',
+    'high' => 'Alta',
+    'medium' => 'Média',
+    'low' => 'Baixa',
+    'very-low' => 'Muito Baixa'
+  ];
+
+  return $translations[$priority] ?? ucfirst($priority);
+}
+
 function loadUsers(): array
 {
   $usersFile = __DIR__ . '/../data/users.json';

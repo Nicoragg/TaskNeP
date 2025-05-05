@@ -82,6 +82,15 @@ $users = loadUsers();
       <option value="canceled">Cancelada</option>
     </select>
 
+    <label for="priority">Prioridade:</label>
+    <select name="priority" id="priority">
+      <option value="very-high">Muito Alta</option>
+      <option value="high">Alta</option>
+      <option value="medium">Média</option>
+      <option value="low">Baixa</option>
+      <option value="very-low">Muito Baixa</option>
+    </select>
+
     <label for="responsible">Responsável:</label>
     <select name="responsible" id="responsible">
       <option value="<?= $_SESSION['user'] ?>">Para mim (<?= $_SESSION['user'] ?>)</option>
@@ -90,15 +99,6 @@ $users = loadUsers();
           <option value="<?= htmlspecialchars($username) ?>"><?= htmlspecialchars($username) ?></option>
         <?php endif; ?>
       <?php endforeach; ?>
-    </select>
-
-    <label for="priority">Prioridade:</label>
-    <select name="priority" id="priority">
-      <option value="very-high">Muito Alta</option>
-      <option value="high">Alta</option>
-      <option value="medium">Média</option>
-      <option value="low">Baixa</option>
-      <option value="very-low">Muito Baixa</option>
     </select>
 
     <button type="submit">Salvar Tarefa</button>
