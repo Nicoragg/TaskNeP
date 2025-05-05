@@ -56,6 +56,7 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
           if ($task['status'] !== $statusKey) continue;
         ?>
           <div class="card"
+            data-id="<?= htmlspecialchars($task['id']) ?>"
             data-responsible="<?= htmlspecialchars($task['responsible']) ?>"
             data-priority="<?= htmlspecialchars($task['priority']) ?>"
             data-status="<?= htmlspecialchars($task['status']) ?>">
@@ -95,4 +96,55 @@ $priorities  = array_unique(array_column($tasks, 'priority'));
   filterResponsible.addEventListener('change', applyFilters);
   filterPriority.addEventListener('change', applyFilters);
   filterStatus.addEventListener('change', applyFilters);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+  document.querySelectorAll('.column .cards').forEach(columnEl => {
+    new Sortable(columnEl, {
+      group: 'tasks',
+      animation: 150,
+      onEnd: event => {
+        const cardEl = event.item;
+        const taskId = cardEl.dataset.id;
+        const newStatus = cardEl.closest('.column').dataset.statusColumn;
+
+        fetch('update.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': '<?= $_SESSION['task_csrf_token'] ?? "" ?>'
+            },
+            body: JSON.stringify({
+              id: taskId,
+              status: newStatus
+            })
+          })
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => {
+                throw new Error(`Server returned ${response.status}: ${text}`);
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (!data.success) {
+              alert('Erro ao atualizar tarefa: ' + data.error);
+              window.location.reload();
+            } else if (data.newCsrfToken) {
+              const csrfToken = data.newCsrfToken;
+              document.querySelectorAll('input[name="csrf_token"]').forEach(input => {
+                input.value = csrfToken;
+              });
+            }
+          })
+          .catch((error) => {
+            console.error('Erro na requisição:', error);
+            alert('Falha na comunicação com o servidor: ' + error.message);
+            window.location.reload();
+          });
+      }
+    });
+  });
 </script>
